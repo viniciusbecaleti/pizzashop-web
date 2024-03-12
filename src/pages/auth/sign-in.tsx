@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -17,19 +17,29 @@ const signInFormSchema = z.object({
 type SignInFormInputs = z.infer<typeof signInFormSchema>
 
 export function SignIn() {
+  const [searchParams] = useSearchParams()
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<SignInFormInputs>()
+  } = useForm<SignInFormInputs>({
+    defaultValues: {
+      email: searchParams.get('email') ?? '',
+    },
+  })
 
   const { mutateAsync: authenticate } = useMutation({
     mutationFn: signIn,
   })
 
   async function handleSignIn(data: SignInFormInputs) {
-    await authenticate({ email: data.email })
-    toast.success(`Enviamos um link de autenticação para o email`)
+    try {
+      await authenticate({ email: data.email })
+      toast.success(`Enviamos um link de autenticação para o email`)
+    } catch (error) {
+      toast.error(`Erro durante a autenticação`)
+    }
   }
 
   return (
