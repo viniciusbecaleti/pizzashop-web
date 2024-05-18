@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -34,17 +35,25 @@ export function SignInPage() {
   const { handleSubmit, formState } = form
 
   async function handleSignIn(data: signInFormType) {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
 
-    console.log(data)
+      console.log(data)
 
-    toast.error('Enviamos um link de autenticação para o seu e-mail.')
+      toast.success('Enviamos um link de autenticação para o seu e-mail.')
+    } catch (error) {
+      toast.error('Credenciais inválidas.')
+    }
   }
 
   return (
     <>
       <Helmet title="Entrar" />
       <main className="flex w-full justify-center">
+        <Button asChild variant="ghost" className="absolute right-10 top-10">
+          <Link to="/sign-up">Novo estabelecimento</Link>
+        </Button>
+
         <div className="flex w-full max-w-[350px] flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">

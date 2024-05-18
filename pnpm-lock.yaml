@@ -14,6 +14,9 @@ dependencies:
   '@radix-ui/react-slot':
     specifier: ^1.0.2
     version: 1.0.2(@types/react@18.3.2)(react@18.3.1)
+  '@react-input/mask':
+    specifier: ^1.2.4
+    version: 1.2.4(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
@@ -753,6 +756,37 @@ packages:
       '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.3.2)(react@18.3.1)
       '@types/react': 18.3.2
       react: 18.3.1
+    dev: false
+
+  /@react-input/core@1.0.11(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-fk2hJxmKZc1LJ5GbNIT2E7faMWifipIiYFLMpVXL3c9izke9+oTjYkseUI9TDVbJA2ptMi5Iwy/VEDNPotwWLA==}
+    peerDependencies:
+      '@types/react': '>=16.8'
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@types/react': 18.3.2
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
+  /@react-input/mask@1.2.4(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-aLvRrlEHJqy0R5M3rctB6A9rORVqL6xbJPrejYCCIEkecFoEvjrLugHVjfTwOarbuw86VhdOwCBjbN9MXquPCA==}
+    peerDependencies:
+      '@types/react': '>=16.8'
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@react-input/core': 1.0.11(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
+      '@types/react': 18.3.2
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /@remix-run/router@1.16.1:
