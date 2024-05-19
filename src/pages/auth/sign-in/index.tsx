@@ -49,7 +49,7 @@ export function SignInPage() {
   return (
     <>
       <Helmet title="Entrar" />
-      <main className="flex w-full justify-center">
+      <div className="flex w-full justify-center">
         <Button asChild variant="ghost" className="absolute right-10 top-10">
           <Link to="/sign-up">Novo estabelecimento</Link>
         </Button>
@@ -88,7 +88,7 @@ export function SignInPage() {
             </form>
           </Form>
         </div>
-      </main>
+      </div>
     </>
   )
 }
