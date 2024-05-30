@@ -46,23 +46,45 @@ export function StoreProfileDialog() {
     staleTime: Infinity,
   })
 
+  function updateManagedRestaurantCached({
+    name,
+    description,
+  }: updateStoreProfileFormType) {
+    const cachedManagedRestaurant =
+      queryClient.getQueryData<GetManagedRestaurantResponse>([
+        'managed-restaurant',
+      ])
+
+    if (cachedManagedRestaurant) {
+      queryClient.setQueryData<GetManagedRestaurantResponse>(
+        ['managed-restaurant'],
+        {
+          ...cachedManagedRestaurant,
+          name,
+          description,
+        },
+      )
+    }
+
+    return { cachedManagedRestaurant }
+  }
+
   const { mutateAsync: updateProfileFn } = useMutation({
     mutationFn: updateProfile,
-    onSuccess(_, { name, description }) {
-      const cachedManagedRestaurant =
-        queryClient.getQueryData<GetManagedRestaurantResponse>([
-          'managed-restaurant',
-        ])
+    onMutate: ({ name, description }) => {
+      const { cachedManagedRestaurant } = updateManagedRestaurantCached({
+        name,
+        description: description ?? '',
+      })
 
-      if (cachedManagedRestaurant) {
-        queryClient.setQueryData<GetManagedRestaurantResponse>(
-          ['managed-restaurant'],
-          {
-            ...cachedManagedRestaurant,
-            name,
-            description,
-          },
-        )
+      return { previews: cachedManagedRestaurant }
+    },
+    onError: (_, __, context) => {
+      if (context?.previews) {
+        updateManagedRestaurantCached({
+          ...context.previews,
+          description: context.previews.description ?? '',
+        })
       }
     },
   })
